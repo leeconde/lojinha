@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lojinha/models/produto.dart';
 import 'package:lojinha/screens/detalhe_produto.dart';
+import 'package:lojinha/screens/sobre.dart';
 
 class Dashboard extends StatelessWidget {
   final String _tituloCoxinha = 'Coxinha ultra recheada';
@@ -55,7 +56,10 @@ class Dashboard extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.more_vert),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Sobre()));
+            },
           ),
         ],
       ),

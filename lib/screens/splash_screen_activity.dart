@@ -21,6 +21,7 @@ class _SplashScreenActivityState extends State<SplashScreenActivity> {
           fontFamily: 'RobotoMono',
         ),
       ),
+      loaderColor: Colors.white,
     );
   }
 }
