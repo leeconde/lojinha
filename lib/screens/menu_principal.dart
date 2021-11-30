@@ -5,7 +5,14 @@ import 'package:lojinha/screens/dashboard.dart';
 import 'package:lojinha/screens/menu_admin.dart';
 import 'package:lojinha/screens/sobre.dart';
 
-class MenuPrincipal extends StatelessWidget {
+class MenuPrincipal extends StatefulWidget {
+  @override
+  State<MenuPrincipal> createState() => _MenuPrincipalState();
+}
+
+class _MenuPrincipalState extends State<MenuPrincipal> {
+  final TextEditingController _senhaController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,8 +46,7 @@ class MenuPrincipal extends StatelessWidget {
                     Color.fromRGBO(184, 122, 72, 100)),
               ),
               onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => MenuAdmin()));
+                _showDialog();
               },
               child: Text(
                 'Admin',
@@ -67,6 +73,52 @@ class MenuPrincipal extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _showDialog() {
+    Widget cancelarButton = ElevatedButton(
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      child: Text('Cancelar'),
+    );
+
+    Widget confirmarButton = ElevatedButton(
+      onPressed: () {
+        if (_senhaController.text == '1010') {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => MenuAdmin()));
+        }
+        if (_senhaController.text != '1010') {
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Senha incorreta')));
+        }
+      },
+      child: Text('Confirmar'),
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext) {
+        return AlertDialog(
+          title: Text('Senha de admin'),
+          content: TextField(
+            controller: _senhaController,
+            obscureText: true,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Senha',
+            ),
+            keyboardType: TextInputType.number,
+          ),
+          actions: [
+            confirmarButton,
+            cancelarButton,
+          ],
+        );
+      },
     );
   }
 }
